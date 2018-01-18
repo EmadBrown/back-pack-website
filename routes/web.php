@@ -14,3 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Admin group
+Route::group(['prefix'=> 'admin', 'middelware' => 'admin'], function(){
+  CRUD::resource('customer', 'Admin\CustomerCrudController');
+});
+
+// Page Route
+Route::get('{page}/{subs?}', ['uses' => 'PageController@index'])
+    ->where(['page' => '^((?!admin).)*$', 'subs' => '.*']);
